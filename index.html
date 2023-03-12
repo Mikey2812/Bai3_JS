@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataTable</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="icon" href="./assets/icon/football-player.gif" type="image/gif">
+    <script src="https://kit.fontawesome.com/d8d2839d44.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="header" style="margin-bottom: 20px;">
+            <h3 class="title">Data Table With Full Features</h3>
+            <div class="activity">
+                <div class="selectvalue">
+                    Show <select name="" id="myselect" class="select">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    entries
+                </div>
+                <div class="search">
+                    Search: <input class="input-search" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Rendering engine<i class="fa-solid fa-arrow-down-short-wide" alt="RenderingEngine"></i></th>
+                        <th>Browser<i class="fa-solid fa-arrows-up-down" alt="Browser"></i></th>
+                        <th>Platform(s)<i class="fa-solid fa-arrows-up-down" alt="Platform"></i></th>
+                        <th>Engine version<i class="fa-solid fa-arrows-up-down" alt="EngineVersion"></i></th>
+                        <th>CSS grade<i class="fa-solid fa-arrows-up-down" alt="CSSGrade"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Rendering engine</th>
+                        <th>Browser</th>
+                        <th>Platform(s)</th>
+                        <th>Engine version</th>
+                        <th>CSS grade</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="showing">
+                <p class="showing-text">Showing 0 to 0 of 0 entries</p>
+                <p class="filtered-text display-none"></p>
+            </div>
+            <div class="btn-control">
+                <button class="prev">Previous</button>
+                <div class="btn-index">
+
+                </div>
+                <button class="next">Next</button>
+            </div>
+        </div>
+    </div>
+    <script type="" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script type="module" src="./assets/js/app.js"></script>
+</body>
+
+</html>
