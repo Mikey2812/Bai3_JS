@@ -44,7 +44,7 @@ let renderButton = () => {
     else {
         firstButton = indexButton = 1;
         for (let i = 1; i <= numberButton; i++) {
-            tempButton = tempButton + `<button alt=${i}>${i}</button>`;
+            tempButton = tempButton + `<button class="button-paging" alt=${i}>${i}</button>`;
         }
     }
     lastButton = numberButton;
@@ -79,31 +79,28 @@ let quickSort = (array, key, way) => {
     const length = array.length;
     if (length < 2) return array;
     const pivotIndex = parseInt((length) / 2); const pivot = array[pivotIndex][key];
-    let left = []; let right = []; let newArray = []; let item;
+    let leftArray = []; let rightArray = [];
     for (let i = 0; i < length; i++) {
-        item = array[i][key];
         if (i === pivotIndex) {
             continue;
         }
-        if (item.localeCompare(pivot, undefined, { numeric: true, sensitivity: 'base' }) <= 0) {
-            if (way === 'ascending') { left.push(array[i]); }
-            else { right.push(array[i]); }
+        if (array[i][key].localeCompare(pivot, undefined, { numeric: true, sensitivity: 'base' }) <= 0) {
+            if (way === 'ascending') { leftArray.push(array[i]); }
+            else { rightArray.push(array[i]); }
         }
         else {
-            if (way === 'ascending') { right.push(array[i]); }
-            else { left.push(array[i]); }
+            if (way === 'ascending') { rightArray.push(array[i]); }
+            else { leftArray.push(array[i]); }
         }
     }
-    return newArray.concat(quickSort(left, key, way), array[pivotIndex], quickSort(right, key, way));
+    return [...quickSort(leftArray, key, way), array[pivotIndex], ...quickSort(rightArray, key, way)];
 }
 let changePage = index => {
-    if (index !== indexButton) {
-        $('button').eq(indexButton).removeClass('active');
-        $('button').eq(index).addClass('active');
-        indexButton = index;
-        renderDataTable(indexButton * numberDataRender - numberDataRender);
-        checkCursor();
-    }
+    $('button').eq(indexButton).removeClass('active');
+    $('button').eq(index).addClass('active');
+    indexButton = index;
+    renderDataTable(indexButton * numberDataRender - numberDataRender);
+    checkCursor();
 }
 $(document).ready(() => {
     selectChange();
@@ -120,9 +117,11 @@ $(document).ready(() => {
     next.click(() => {
         changePage(indexButton + 1);
     });
-    $('.btn-index').click(e => {
-        let tempIndex = parseInt($(e.target).attr('alt'));
-        changePage(tempIndex);
+    $('.button-paging').click(e => {
+        const tempIndex = parseInt($(e.target).attr('alt'));
+        if (tempIndex !== indexButton) {
+            changePage(tempIndex);
+        }
     });
     // Sort
     let way = 'ascending';
@@ -138,7 +137,7 @@ $(document).ready(() => {
         }
         way = way === 'ascending' ? 'descending' : 'ascending';
         currentAlt = altIndex;
-        classIndex = $(e.target).attr('class');
+        classIndex = iconIndex.attr('class');
         classIndex = classIndex === normal ? ascending : (classIndex === descending ? ascending : descending);
         iconIndex.attr('class', classIndex);
         arraydatas = quickSort(arraydatas, altIndex, way);
@@ -163,12 +162,14 @@ $(document).ready(() => {
             filteredText.removeClass('display-none');
         }
         length = arraydatas.length;
-        if (length === 0) { firstButton = indexButton = 0; }
-        else { firstButton = indexButton = 1; }
+        if (length === 0) {
+            from = to = 0;
+        }
+        else {
+            from = 1; to = indexButton * numberDataRender > length ? length : indexButton * numberDataRender;
+        }
+        showingText.text(`Showing ${from} to ${to} of ${length} entries`);
         renderButton();
         renderDataTable(0);
-        if (length === 0) { from = to = 0; }
-        else { from = 1; to = indexButton * numberDataRender > length ? length : indexButton * numberDataRender; }
-        showingText.text(`Showing ${from} to ${to} of ${length} entries`);
     });
 });
