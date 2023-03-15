@@ -101,6 +101,9 @@ let changePage = index => {
     indexButton = index;
     renderDataTable(indexButton * numberDataRender - numberDataRender);
     checkCursor();
+    from = (index - 1) * numberDataRender + 1;
+    to = index * numberDataRender > length ? length : index * numberDataRender;
+    showingText.text(`Showing ${from} to ${to} of ${length} entries`);
 }
 $(document).ready(() => {
     selectChange();
@@ -127,7 +130,6 @@ $(document).ready(() => {
     let way = 'ascending';
     const normal = 'fa-solid fa-arrows-up-down', ascending = 'fa-solid fa-arrow-down-short-wide', descending = 'fa-solid fa-arrow-down-wide-short';
     let altIndex, currentAlt; altIndex = currentAlt = 'RenderingEngine';
-    let classIndex;
     $('i').click(e => {
         const iconIndex = $(e.target);
         altIndex = iconIndex.attr('alt');
@@ -137,9 +139,7 @@ $(document).ready(() => {
         }
         way = way === 'ascending' ? 'descending' : 'ascending';
         currentAlt = altIndex;
-        classIndex = iconIndex.attr('class');
-        classIndex = classIndex === normal ? ascending : (classIndex === descending ? ascending : descending);
-        iconIndex.attr('class', classIndex);
+        iconIndex.attr('class', iconIndex.attr('class') === ascending ? descending : ascending);
         arraydatas = quickSort(arraydatas, altIndex, way);
         renderDataTable(0);
     });
